@@ -148,6 +148,9 @@ class operatorStack{
 			else if (someSign == 'x' || someSign == '/'){
 				signs[use-1].precedence = 3;
 			}
+			else if ( someSign == '^'){
+				signs[use-1].precedence = 4;
+			}
 		}
 		void pop(){
 			if ( use <=0){
