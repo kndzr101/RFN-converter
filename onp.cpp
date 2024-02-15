@@ -34,7 +34,8 @@ int main(int argc, char* argv[]){
 
 
 			while (opStack.use > 0 &&
-       		  (findPrecedence(currentOp) <= opStack.topPrec())){
+       		  (findPrecedence(currentOp) <= opStack.topPrec()) && 
+			  opStack.topSign() != '['){
 					char helper = opStack.topSign();
 					opStack.pop();
 					ouStack.pushOnc(helper);
@@ -60,7 +61,9 @@ int main(int argc, char* argv[]){
 			    opStack.pop();
 			    ouStack.pushOnc(helper2);
 			}
-			opStack.pop(); // żeby wyrzucić lewy nawias 
+			if ( opStack.topSign() == '['){
+			opStack.pop(); //	erase a left parenthesis 
+			}
 		}
 		else if ( isdigit( argv[i][0]) ){
 			int tempSize  = strlen( argv[i]);	
@@ -68,6 +71,7 @@ int main(int argc, char* argv[]){
 
 			for ( int j  = 0 ; j < tempSize ; j++){
 				value  = 10*value + (argv[i][j] - '0');
+
 			}
 				
 
