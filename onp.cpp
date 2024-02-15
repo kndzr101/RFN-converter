@@ -10,6 +10,18 @@ int findPrecedence ( char op){
 	else if ( op == 'x' || op == '/'){
 		return 3;
 	}
+	else if ( op == '^'){
+		return 4;
+	}
+	return 0;
+}
+bool isLeftAssociative ( char op){
+	if ( op == '+' || op == '-' || op == 'x' || op == '/' ){
+		return 1;
+	}
+	else if (op == '^'){
+		return 0;
+	}
 	return 0;
 }
 int main(int argc, char* argv[]){
@@ -24,7 +36,7 @@ int main(int argc, char* argv[]){
 	int prevPrecedence = 0;
 	for(int i = 1 ;  i<argc ; i++){
 		
-		if (argv[i][0] == '+' || argv[i][0] == '-' || argv[i][0] == 'x' || argv[i][0] == '/'){
+		if (argv[i][0] == '+' || argv[i][0] == '-' || argv[i][0] == 'x' || argv[i][0] == '/' || argv[i][0] == '^'){
 			
 			
 			char currentOp = argv[i][0];	
@@ -33,9 +45,9 @@ int main(int argc, char* argv[]){
 
 
 
-			while (opStack.use > 0 &&
-       		  (findPrecedence(currentOp) <= opStack.topPrec()) && 
-			  opStack.topSign() != '['){
+			while ( (opStack.use > 0 && opStack.topSign() != '[') &&
+       		  ( (findPrecedence(currentOp) < opStack.topPrec()) || (
+			   (findPrecedence(currentOp) == opStack.topPrec()) && isLeftAssociative(currentOp) )) ) {
 					char helper = opStack.topSign();
 					opStack.pop();
 					ouStack.pushOnc(helper);
