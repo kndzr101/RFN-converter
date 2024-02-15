@@ -151,11 +151,14 @@ class operatorStack{
 		}
 		void pop(){
 			if ( use <=0){
-				cout << "Stack Underflow!"<<endl;
+				cout << "opStack Stack Underflow!"<<endl;
 				return;
 			}
-			//signs[use-1].op = 0;
+			else{
+			
+			signs[use-1].op = 0;
 			use--;
+			}
 		}
 		bool oisEmpty(){
 			if ( use<=0){
@@ -166,7 +169,6 @@ class operatorStack{
 			}
 		}
 		void display(){
-			cout << "use" << use << endl;
 			//cout <<signs[0].op<<endl;
 			for ( int i = 0 ; i < use ; i++){
 				//cout <<"prec: "<< signs[i].precedence<<endl;
