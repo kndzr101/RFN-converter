@@ -24,6 +24,15 @@ bool isLeftAssociative ( char op){
 	}
 	return 0;
 }
+bool isLetter ( char someChar){
+	if ( ( someChar >= 'A' && someChar <= 'Z' ) || (someChar >= 'a' && someChar <= 'z') ){
+		return 1;
+	}
+	else {
+		return 0;
+	}
+	return 0;
+}
 int main(int argc, char* argv[]){
 	outputStack ouStack;
 	operatorStack opStack;
@@ -76,6 +85,11 @@ int main(int argc, char* argv[]){
 			if ( opStack.topSign() == '['){
 			opStack.pop(); //	erase a left parenthesis 
 			}
+			if ( opStack.isFunction()){
+				string helper6 = opStack.topFunc();
+				opStack.pop();
+				ouStack.pushOns(helper6);
+			}
 		}
 		else if ( isdigit( argv[i][0]) ){
 			int tempSize  = strlen( argv[i]);	
@@ -90,6 +104,22 @@ int main(int argc, char* argv[]){
 
 			ouStack.pushOni(value);
 			
+		}
+		else if (isLetter(argv[i][0])){
+			string functionName = "\0";
+			int tempSize = strlen(argv[i]);
+			for ( int j = 0 ; j < tempSize ; j++){
+				functionName+=argv[i][j];
+
+			}
+			opStack.pushOns(functionName);
+		}
+		else if (argv[i][0] == ','){
+			while( opStack.topSign() != '['){
+				char helper3 = opStack.topSign();
+				ouStack.pushOnc(helper3);
+				opStack.pop();
+			}
 		}
 		else{
 			cout << "bad input !" << endl;
